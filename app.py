@@ -35,7 +35,7 @@ def _send_command(cmd_str):
     # Read the response from the command
     with open(RX_PIPE, "r", encoding="utf-8") as pipe:
         response = pipe.read()
-    
+
         # Some commands generate many lines of output; introduce a short wait
         # Keep looping until we see "done" or "error" in the response text
         while not ("done" in response or "error" in response):
