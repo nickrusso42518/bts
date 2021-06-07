@@ -5,12 +5,13 @@ python:
 
 install:
   - "pip install -r exabgp/requirements.txt"
+  - "sudo exabgp/make_pipes.sh"
 
 before_script:
   - "pylint exabgp/*.py"
   - "black --line-length 80 --check exabgp/*.py"
-  - "exabgp exabgp/conf.ini --test"
+  - "exabgp exabgp/conf.txt --test"
 
 script:
-  - "exabgp exabgp/conf.ini &"
+  - "exabgp exabgp/conf.txt &"
   - "pytest --verbose exabgp/test_api.py"
