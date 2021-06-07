@@ -10,8 +10,10 @@ install:
 before_script:
   - "pylint exabgp/*.py"
   - "black --line-length 80 --check exabgp/*.py"
-  - "exabgp exabgp/conf.txt --test"
-  - "exabgp exabgp/ci.txt --test"
+  - 'sed --in-place "s:BUILD_DIR:$TRAVIS_BUILD_DIR:" exabgp/ci.txt'
+  - "head --lines=5 exabgp/ci.txt"
+  - "exabgp exabgp/ci.txt --validate"
+  - "exabgp exabgp/conf.txt --validate"
 
 script:
   - "env exabgp.tcp.bind=127.0.0.1 exabgp.tcp.port=5001 exabgp exabgp/ci.txt &"

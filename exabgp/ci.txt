@@ -1,5 +1,5 @@
 process http-api {
-    run /usr/bin/env python /root/bts/exabgp/app.py;
+    run /usr/bin/env python BUILD_DIR/exabgp/app.py;
     encoder json;
 }
 
