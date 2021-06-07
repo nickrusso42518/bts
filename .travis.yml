@@ -4,14 +4,14 @@ python:
   - "3.7"
 
 install:
-  - "pip install -r exabgp/requirements.txt"
+  - "sudo pip install -r exabgp/requirements.txt"
   - "sudo exabgp/make_pipes.sh"
 
 before_script:
-  - "pylint exabgp/*.py"
-  - "black --line-length 80 --check exabgp/*.py"
-  - "exabgp exabgp/conf.txt --test"
+  - "sudo pylint exabgp/*.py"
+  - "sudo black --line-length 80 --check exabgp/*.py"
+  - "sudo exabgp exabgp/conf.txt --test"
 
 script:
-  - "exabgp exabgp/conf.txt &"
-  - "pytest --verbose exabgp/test_api.py"
+  - "sudo exabgp exabgp/conf.txt &"
+  - "sudo pytest --verbose exabgp/test_api.py"
