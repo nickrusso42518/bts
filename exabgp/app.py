@@ -64,21 +64,24 @@ def announce():
     """
     Announces (advertises) a new route into the BGP network. Must include
     "prefix" and "nexthop" fields in the JSON body. Optionally includes
-    the "neighbor" field for a targeted announcement.
+    the "neighbor" field for a targeted announcement. Optionally includes
+    the "pathid" field if BGP additional-paths has been negotiated.
     """
 
     # Collect the individual fields from the body
     prefix = request.json.get("prefix")
     nexthop = request.json.get("nexthop")
     neighbor = request.json.get("neighbor")
+    pathid = request.json.get("pathid")
 
     # Ensure that "prefix" and "nexthop" are specified, at a minimum
     if not prefix or not nexthop:
         return ({"reason": "body needs 'prefix' and 'nexthop' fields"}, 400)
 
-    # Assemble the neighbor and command strings
-    nbr_str = f"neighbor {neighbor} " if neighbor else ""
-    cmd_str = f"{nbr_str}announce route {prefix} next-hop {nexthop}"
+    # Assemble the path ID, neighbor, and command strings
+    path_str = f"path-information 0.0.0.{pathid}" if pathid else ""
+    nbr_str = f"neighbor {neighbor}" if neighbor else ""
+    cmd_str = f"{nbr_str} announce route {prefix} {path_str} next-hop {nexthop}"
 
     # Issue the command and return the response
     response = _send_command(cmd_str)
@@ -90,20 +93,23 @@ def withdraw():
     """
     Withdraws (un-advertises) an existing route from BGP. Must include
     the "prefix" field in the JSON body. Optionally includes
-    the "neighbor" field for a targeted withdrawal.
+    the "neighbor" field for a targeted withdrawal. Optionally includes
+    the "pathid" field if BGP additional-paths has been negotiated.
     """
 
     # Collect the individual fields from the body
     prefix = request.json.get("prefix")
     neighbor = request.json.get("neighbor")
+    pathid = request.json.get("pathid")
 
     # Ensure that "prefix" is specified, at a minimum
     if not prefix:
         return ({"reason": "body needs 'prefix' field"}, 400)
 
     # Assemble the neighbor and command strings
-    nbr_str = f"neighbor {neighbor} " if neighbor else ""
-    cmd_str = f"{nbr_str}withdraw route {prefix}"
+    path_str = f"path-information 0.0.0.{pathid}" if pathid else ""
+    nbr_str = f"neighbor {neighbor}" if neighbor else ""
+    cmd_str = f"{nbr_str} withdraw route {prefix} {path_str}"
 
     # Issue the command and return the response
     response = _send_command(cmd_str)
@@ -117,14 +123,16 @@ def routes():
     the announced routes for each peer. The response is a dictionary
     that contains the number of routes and a list of sub-dictionaries
     containing the key attributes of a route: neighbor, afi, safi,
-    prefix, and nexthop.
+    prefix, pathid (optional), and nexthop.
     """
 
     # Define pattern to match text response from exabgp. Example:
     # neighbor 192.168.0.1 ipv4 unicast 203.0.113.0/24 next-hop 10.5.8.8
+    # (add-path): 203.0.113.0/24 path-information 0.0.0.1 next-hop 10.5.8.8
     pattern = (
         r"neighbor\s+(?P<neighbor>\S+)\s+(?P<afi>\S+)\s+(?P<safi>\S+)\s+"
-        r"(?P<prefix>\S+)\s+next-hop\s+(?P<nexthop>\S+)"
+        r"(?P<prefix>\S+)(?:\s+path-information\s+(?P<pathid>\S+))?"
+        r"\s+next-hop\s+(?P<nexthop>\S+)"
     )
 
     # Compile the regex, collect the outbound BGP routes, and assemble
@@ -134,7 +142,8 @@ def routes():
     response = {"count": len(raw_data["response"]), "routes": []}
 
     # For each route returned by exabgp, parse the fields and
-    # add them to the "routes" list
+    # add them to the "routes" list. If the "pathid" is absent from
+    # the output, the "pathid" key is added with a value of "None".
     for route in raw_data["response"]:
         match = route_regex.search(route)
         response["routes"].append(match.groupdict())
