@@ -11,8 +11,10 @@ import re
 import time
 from flask import Flask, request, __version__
 
-# Create the flask app
+# Create the flask app along with host/port
 app = Flask(__name__)
+APP_HOST = "0.0.0.0"
+APP_PORT = 5000
 
 # Build these pipes before running exabgp (make_pipes.sh)
 TX_PIPE = "/var/run/exabgp/exabgp.in"
@@ -79,9 +81,9 @@ def announce():
         return ({"reason": "body needs 'prefix' and 'nexthop' fields"}, 400)
 
     # Assemble the path ID, neighbor, and command strings
-    path_str = f"path-information 0.0.0.{pathid}" if pathid else ""
-    nbr_str = f"neighbor {neighbor}" if neighbor else ""
-    cmd_str = f"{nbr_str} announce route {prefix} {path_str} next-hop {nexthop}"
+    path_str = f"path-information 0.0.0.{pathid} " if pathid else ""
+    nbr_str = f"neighbor {neighbor} " if neighbor else ""
+    cmd_str = f"{nbr_str}announce route {prefix} {path_str}next-hop {nexthop}"
 
     # Issue the command and return the response
     response = _send_command(cmd_str)
@@ -108,8 +110,8 @@ def withdraw():
 
     # Assemble the neighbor and command strings
     path_str = f"path-information 0.0.0.{pathid}" if pathid else ""
-    nbr_str = f"neighbor {neighbor}" if neighbor else ""
-    cmd_str = f"{nbr_str} withdraw route {prefix} {path_str}"
+    nbr_str = f"neighbor {neighbor} " if neighbor else ""
+    cmd_str = f"{nbr_str}withdraw route {prefix} {path_str}"
 
     # Issue the command and return the response
     response = _send_command(cmd_str)
@@ -173,4 +175,4 @@ def raw():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
+    app.run(host=APP_HOST, port=APP_PORT)
