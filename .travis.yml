@@ -4,14 +4,16 @@ python:
   - "3.7"
 
 install:
-  - "sudo pip install -r exabgp/requirements.txt"
+  - "pip install -r exabgp/requirements.txt"
   - "sudo exabgp/make_pipes.sh"
 
 before_script:
-  - "sudo pylint exabgp/*.py"
-  - "sudo black --line-length 80 --check exabgp/*.py"
-  - "sudo exabgp exabgp/conf.txt --test"
+  - "pylint exabgp/*.py"
+  - "black --line-length 80 --check exabgp/*.py"
+  - "exabgp exabgp/conf.txt --test"
+  - "exabgp exabgp/ci.txt --test"
 
 script:
-  - "sudo exabgp exabgp/conf.txt &"
-  - "sudo pytest --verbose exabgp/test_api.py"
+  - "env exabgp.tcp.bind=127.0.0.1 exabgp.tcp.port=5001 exabgp exabgp/ci.txt &"
+  - "pytest --verbose exabgp/test_api.py"
+...
