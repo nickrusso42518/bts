@@ -6,10 +6,17 @@ https://app.travis-ci.com/nickrusso42518/bts)
 BGP server implementations using `exabgp` to complete
 the architecture described [here.](http://njrusmc.net/pub/bts_leaf_spine.pdf)
 
-The exabgp design uses `flask` as a front-end to built a simple API for
-announcing and withdrawing routes. CI testing has been applied, too.
+> Contact information:\
+> Email:    njrusmc@gmail.com\
+> Twitter:  @nickrusso42518
 
-The `grpc` content is a work in process and should not be consumed.
+There are two API implementations in this repository:
 
-At some point, the announcement and withdrawal of routes will be
-automatically controlled via SNMP/telemetric monitoring.
+1. __Flask/HTTP__: This uses Python `flask` as a front-end to build a simple
+   HTTP API (not RESTful) for announcing and withdrawing routes. 
+   This includes a Postman collection and corresponding environment to
+   simplify adoption/testing.
+
+2. __gRPC__: This uses a custom protobuf services file to define various
+   RPCs supported by the API. It also includes a compilation script
+   for Python source code.
