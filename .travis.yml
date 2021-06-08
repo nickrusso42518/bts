@@ -6,11 +6,11 @@ jobs:
     - language: "python"
       python:
         - "3.7"
-      
+
       install:
         - "pip install -r flask/requirements.txt"
         - "sudo ./make_pipes.sh"
-      
+
       before_script:
         - "pylint flask/*.py"
         - "black --line-length 82 --check flask/*.py"
@@ -18,7 +18,7 @@ jobs:
         - "head --lines=5 flask/ci.txt"
         - "exabgp flask/ci.txt --validate"
         - "exabgp flask/conf.txt --validate"
-      
+
       script:
         - >-
           env exabgp.tcp.bind=127.0.0.1
@@ -30,12 +30,12 @@ jobs:
     - language: "python"
       python:
         - "3.7"
-      
+
       install:
         - "pip install -r grpc/requirements.txt"
         - "sudo ./make_pipes.sh"
         - "./grpc/compile.sh grpc"
-      
+
       before_script:
         - "pylint grpc/server.py grpc/test_api.py"
         - "black --line-length 82 --check grpc/server.py grpc/test_api.py"
@@ -43,7 +43,7 @@ jobs:
         - "head --lines=5 grpc/ci.txt"
         - "exabgp grpc/ci.txt --validate"
         - "exabgp grpc/conf.txt --validate"
-      
+
       script:
         - >-
           env exabgp.tcp.bind=127.0.0.1

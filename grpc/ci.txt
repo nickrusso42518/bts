@@ -17,7 +17,7 @@ template {
             ipv4 unicast;
         }
         api {
-            processes [ http-api ];
+            processes [ grpc-api ];
         }
     }
 }

@@ -1,5 +1,8 @@
 #/bin/bash
 
+# Create the input and output OS pipes to communicate with exabgp.
+# These are not specific to any API implementation.
+
 # Ensure directory path exists
 mkdir -p /var/run/exabgp/
 
