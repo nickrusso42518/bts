@@ -13,9 +13,9 @@ from concurrent import futures
 import logging
 import re
 import time
-import grpc
 import bts_pb2
 import bts_pb2_grpc
+import grpc
 
 # Build these pipes before running exabgp (make_pipes.sh)
 TX_PIPE = "/var/run/exabgp/exabgp.in"
@@ -116,7 +116,7 @@ class BTS(bts_pb2_grpc.BTSServicer):
             route_item = bts_pb2.RouteItem(**match.groupdict())
             routes.append(route_item)
 
-        data.routes.extend(routes)
+        data.routes.extend(routes)  # pylint: disable=no-member
         self.logger.info("RoutesRPC to %s with %s", peer, data)
         return data
 

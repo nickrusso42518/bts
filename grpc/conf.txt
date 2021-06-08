@@ -1,5 +1,5 @@
-process http-api {
-    run /usr/bin/env python BUILD_DIR/exabgp/app.py;
+process grpc-api {
+    run /usr/bin/env python /root/bts/grpc/server.py;
     encoder json;
 }
 
@@ -9,6 +9,8 @@ template {
         local-as 65001;
         local-address 192.168.0.99;
         peer-as 65001;
+        passive true;
+        listen 179;
         md5-password Secret123;
         capability {
             add-path send;
@@ -17,7 +19,7 @@ template {
             ipv4 unicast;
         }
         api {
-            processes [ http-api ];
+            processes [ grpc-api ];
         }
     }
 }

@@ -6,9 +6,9 @@ Purpose: Test cases for the server.py RPC methods.
 """
 
 import pytest
-import grpc
 import bts_pb2
 import bts_pb2_grpc
+import grpc
 
 
 @pytest.fixture(scope="session")
@@ -90,7 +90,7 @@ def test_announce_pfx_nh_nbr(stub):
         "neighbor": "192.168.0.1",
     }
     command = (
-        "neighbor 192.168.0.1 announce route 198.51.100.0/24 " "next-hop 10.5.8.8"
+        "neighbor 192.168.0.1 announce route 198.51.100.0/24 next-hop 10.5.8.8"
     )
     data = stub.AnnounceRPC(bts_pb2.AnnounceArgs(**args))
     _check_route_change(data, command)
