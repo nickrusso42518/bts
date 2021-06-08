@@ -1,0 +1,981 @@
+{
+	"info": {
+		"_postman_id": "e32da33e-1df1-4098-8c32-c8201fad7110",
+		"name": "BTS exabgp",
+		"description": "Basic HTTP front-end for exabgp, a Python-based BGP implementation: https://github.com/Exa-Networks/exabgp\r\n\r\nThis relates to the BGP Traffic Server (BTS) project: http://njrusmc.net/pub/bts_leaf_spine.pdf\r\n\r\nSource code: https://github.com/nickrusso42518/bts",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get flask and exabgp version",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{exabgp_host}}:{{exabgp_port}}/version",
+					"protocol": "http",
+					"host": [
+						"{{exabgp_host}}"
+					],
+					"port": "{{exabgp_port}}",
+					"path": [
+						"version"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{exabgp_host}}:{{exabgp_port}}/version",
+							"protocol": "http",
+							"host": [
+								"{{exabgp_host}}"
+							],
+							"port": "{{exabgp_port}}",
+							"path": [
+								"version"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "52"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.0.1 Python/3.6.8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 07 Jun 2021 15:46:47 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"exabgp_version\": \"4.2.13\",\n    \"flask_version\": \"2.0.1\"\n}"
+				},
+				{
+					"name": "Failure: not found, bad endpoint",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{exabgp_host}}:{{exabgp_port}}/version123",
+							"protocol": "http",
+							"host": [
+								"{{exabgp_host}}"
+							],
+							"port": "{{exabgp_port}}",
+							"path": [
+								"version123"
+							]
+						}
+					},
+					"status": "NOT FOUND",
+					"code": 404,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "232"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.0.1 Python/3.6.8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 07 Jun 2021 17:08:45 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 3.2 Final//EN\">\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>"
+				},
+				{
+					"name": "Failure: method not allowed",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{exabgp_host}}:{{exabgp_port}}/version",
+							"protocol": "http",
+							"host": [
+								"{{exabgp_host}}"
+							],
+							"port": "{{exabgp_port}}",
+							"path": [
+								"version"
+							]
+						}
+					},
+					"status": "METHOD NOT ALLOWED",
+					"code": 405,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"key": "Allow",
+							"value": "HEAD, OPTIONS, GET"
+						},
+						{
+							"key": "Content-Length",
+							"value": "178"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.0.1 Python/3.6.8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 07 Jun 2021 17:08:33 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 3.2 Final//EN\">\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not allowed for the requested URL.</p>"
+				}
+			]
+		},
+		{
+			"name": "Get announced routes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{exabgp_host}}:{{exabgp_port}}/routes",
+					"protocol": "http",
+					"host": [
+						"{{exabgp_host}}"
+					],
+					"port": "{{exabgp_port}}",
+					"path": [
+						"routes"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success: sample routes",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{exabgp_host}}:{{exabgp_port}}/routes",
+							"protocol": "http",
+							"host": [
+								"{{exabgp_host}}"
+							],
+							"port": "{{exabgp_port}}",
+							"path": [
+								"routes"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "385"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.0.1 Python/3.6.8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 07 Jun 2021 19:00:49 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"count\": 3,\n    \"routes\": [\n        {\n            \"afi\": \"ipv4\",\n            \"neighbor\": \"192.168.0.1\",\n            \"nexthop\": \"10.5.8.5\",\n            \"pathid\": null,\n            \"prefix\": \"172.16.7.0/24\",\n            \"safi\": \"unicast\"\n        },\n        {\n            \"afi\": \"ipv4\",\n            \"neighbor\": \"192.168.0.1\",\n            \"nexthop\": \"10.6.8.6\",\n            \"pathid\": \"0.0.0.1\",\n            \"prefix\": \"172.16.7.0/24\",\n            \"safi\": \"unicast\"\n        },\n        {\n            \"afi\": \"ipv4\",\n            \"neighbor\": \"192.168.0.2\",\n            \"nexthop\": \"10.4.7.4\",\n            \"pathid\": \"0.0.0.47\",\n            \"prefix\": \"172.16.9.0/24\",\n            \"safi\": \"unicast\"\n        }\n    ]\n}"
+				},
+				{
+					"name": "Success: empty",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{exabgp_host}}:{{exabgp_port}}/routes",
+							"protocol": "http",
+							"host": [
+								"{{exabgp_host}}"
+							],
+							"port": "{{exabgp_port}}",
+							"path": [
+								"routes"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "24"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.0.1 Python/3.6.8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 07 Jun 2021 15:46:56 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"count\": 0,\n    \"routes\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "Announce new route",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"neighbor\": \"192.168.0.1\",\r\n    \"prefix\": \"172.16.7.0/24\",\r\n    \"nexthop\": \"10.5.8.5\"\r\n}"
+				},
+				"url": {
+					"raw": "http://{{exabgp_host}}:{{exabgp_port}}/announce",
+					"protocol": "http",
+					"host": [
+						"{{exabgp_host}}"
+					],
+					"port": "{{exabgp_port}}",
+					"path": [
+						"announce"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success: neighbor-specific",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"neighbor\": \"192.168.0.2\",\r\n    \"prefix\": \"172.16.7.0/24\",\r\n    \"nexthop\": \"10.5.8.5\"\r\n}"
+						},
+						"url": {
+							"raw": "http://{{exabgp_host}}:{{exabgp_port}}/announce",
+							"protocol": "http",
+							"host": [
+								"{{exabgp_host}}"
+							],
+							"port": "{{exabgp_port}}",
+							"path": [
+								"announce"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "112"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.0.1 Python/3.6.8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 07 Jun 2021 15:47:07 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"command\": \"neighbor 192.168.0.2 announce route 172.16.7.0/24 next-hop 10.5.8.5\",\n    \"response\": [],\n    \"status\": \"done\"\n}"
+				},
+				{
+					"name": "Failure: missing key fields",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"neighbor\": \"192.168.0.2\",\r\n    \"nexthop\": \"10.5.8.5\"\r\n}"
+						},
+						"url": {
+							"raw": "http://{{exabgp_host}}:{{exabgp_port}}/announce",
+							"protocol": "http",
+							"host": [
+								"{{exabgp_host}}"
+							],
+							"port": "{{exabgp_port}}",
+							"path": [
+								"announce"
+							]
+						}
+					},
+					"status": "BAD REQUEST",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "54"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.0.1 Python/3.6.8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 07 Jun 2021 15:48:15 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"reason\": \"body needs 'prefix' and 'nexthop' fields\"\n}"
+				},
+				{
+					"name": "Success: neighbor-specific with add-path",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"neighbor\": \"192.168.0.1\",\r\n    \"prefix\": \"172.16.7.0/24\",\r\n    \"nexthop\": \"10.6.8.6\",\r\n    \"pathid\": 1\r\n}"
+						},
+						"url": {
+							"raw": "http://{{exabgp_host}}:{{exabgp_port}}/announce",
+							"protocol": "http",
+							"host": [
+								"{{exabgp_host}}"
+							],
+							"port": "{{exabgp_port}}",
+							"path": [
+								"announce"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "137"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.0.1 Python/3.6.8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 07 Jun 2021 18:58:49 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"command\": \"neighbor 192.168.0.1 announce route 172.16.7.0/24 path-information 0.0.0.1 next-hop 10.6.8.6\",\n    \"response\": [],\n    \"status\": \"done\"\n}"
+				},
+				{
+					"name": "Success: generic",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"prefix\": \"172.16.9.0/24\",\r\n    \"nexthop\": \"10.5.8.5\"\r\n}"
+						},
+						"url": {
+							"raw": "http://{{exabgp_host}}:{{exabgp_port}}/announce",
+							"protocol": "http",
+							"host": [
+								"{{exabgp_host}}"
+							],
+							"port": "{{exabgp_port}}",
+							"path": [
+								"announce"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "91"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.0.1 Python/3.6.8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 07 Jun 2021 15:47:44 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"command\": \"announce route 172.16.9.0/24 next-hop 10.5.8.5\",\n    \"response\": [],\n    \"status\": \"done\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Withdraw existing route",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"neighbor\": \"192.168.0.1\",\r\n    \"prefix\": \"172.16.7.0/24\",\r\n    \"pathid\": 1\r\n}"
+				},
+				"url": {
+					"raw": "http://{{exabgp_host}}:{{exabgp_port}}/withdraw",
+					"protocol": "http",
+					"host": [
+						"{{exabgp_host}}"
+					],
+					"port": "{{exabgp_port}}",
+					"path": [
+						"withdraw"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success: generic",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"prefix\": \"172.16.7.0/24\"\r\n}"
+						},
+						"url": {
+							"raw": "http://{{exabgp_host}}:{{exabgp_port}}/withdraw",
+							"protocol": "http",
+							"host": [
+								"{{exabgp_host}}"
+							],
+							"port": "{{exabgp_port}}",
+							"path": [
+								"withdraw"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "73"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.0.1 Python/3.6.8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 07 Jun 2021 17:11:02 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"command\": \"withdraw route 172.16.7.0/24\",\n    \"response\": [],\n    \"status\": \"done\"\n}"
+				},
+				{
+					"name": "Success: neighbor-specific",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"neighbor\": \"192.168.0.1\",\r\n    \"prefix\": \"172.16.7.0/24\"\r\n}"
+						},
+						"url": {
+							"raw": "http://{{exabgp_host}}:{{exabgp_port}}/withdraw",
+							"protocol": "http",
+							"host": [
+								"{{exabgp_host}}"
+							],
+							"port": "{{exabgp_port}}",
+							"path": [
+								"withdraw"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "94"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.0.1 Python/3.6.8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 07 Jun 2021 17:10:05 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"command\": \"neighbor 192.168.0.1 withdraw route 172.16.7.0/24\",\n    \"response\": [],\n    \"status\": \"done\"\n}"
+				},
+				{
+					"name": "Failure: missing key fields",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"neighbor\": \"192.168.0.1\"\r\n}"
+						},
+						"url": {
+							"raw": "http://{{exabgp_host}}:{{exabgp_port}}/withdraw",
+							"protocol": "http",
+							"host": [
+								"{{exabgp_host}}"
+							],
+							"port": "{{exabgp_port}}",
+							"path": [
+								"withdraw"
+							]
+						}
+					},
+					"status": "BAD REQUEST",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "39"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.0.1 Python/3.6.8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 07 Jun 2021 17:11:16 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"reason\": \"body needs 'prefix' field\"\n}"
+				},
+				{
+					"name": "Success: neighbor-specific with add-path",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"neighbor\": \"192.168.0.1\",\r\n    \"prefix\": \"172.16.7.0/24\",\r\n    \"pathid\": 1\r\n}"
+						},
+						"url": {
+							"raw": "http://{{exabgp_host}}:{{exabgp_port}}/withdraw",
+							"protocol": "http",
+							"host": [
+								"{{exabgp_host}}"
+							],
+							"port": "{{exabgp_port}}",
+							"path": [
+								"withdraw"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "119"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.0.1 Python/3.6.8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 07 Jun 2021 18:59:34 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"command\": \"neighbor 192.168.0.1 withdraw route 172.16.7.0/24 path-information 0.0.0.1\",\n    \"response\": [],\n    \"status\": \"done\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Send raw command",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"command\": \"show neighbor summary\"\r\n}"
+				},
+				"url": {
+					"raw": "http://{{exabgp_host}}:{{exabgp_port}}/raw",
+					"protocol": "http",
+					"host": [
+						"{{exabgp_host}}"
+					],
+					"port": "{{exabgp_port}}",
+					"path": [
+						"raw"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success: neighbor extensive single",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"command\": \"show neighbor 192.168.0.1 extensive\"\r\n}"
+						},
+						"url": {
+							"raw": "http://{{exabgp_host}}:{{exabgp_port}}/raw",
+							"protocol": "http",
+							"host": [
+								"{{exabgp_host}}"
+							],
+							"port": "{{exabgp_port}}",
+							"path": [
+								"raw"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1890"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.0.1 Python/3.6.8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 07 Jun 2021 19:01:28 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"command\": \"show neighbor 192.168.0.1 extensive\",\n    \"response\": [\n        \"Neighbor 192.168.0.1\",\n        \"\",\n        \"  Session                         Local\",\n        \"   local                   192.168.0.99                                \",\n        \"   state                    ESTABLISHED                                \",\n        \"   up for                       0:02:53                                \",\n        \"\",\n        \"  Setup                           Local          Remote\",\n        \"   AS                             65001           65001                \",\n        \"   ID                         10.0.0.99       10.0.0.99                \",\n        \"   hold-time                        180             180                \",\n        \"\",\n        \"  Capability                      Local          Remote\",\n        \"   asn4:                        enabled         enabled                \",\n        \"   route-refresh:              disabled         enabled                \",\n        \"   multi-session:              disabled        disabled                \",\n        \"   operational:                disabled        disabled                \",\n        \"   add-path:                    enabled         enabled                \",\n        \"   extended-message:            enabled        disabled                \",\n        \"   graceful-restart:           disabled        disabled                \",\n        \"\",\n        \"  Families                        Local          Remote        Add-Path\",\n        \"   ipv4 unicast:                enabled         enabled        disabled\",\n        \"\",\n        \"  Message Statistic                Sent        Received\",\n        \"   open:                              1               1                \",\n        \"   notification:                      0               0                \",\n        \"   keepalive:                         3               5                \",\n        \"   update:                            5               1                \",\n        \"   refresh:                           0               0                \",\n        \"   total:                             9               7                \",\n        \"\"\n    ],\n    \"status\": \"done\"\n}"
+				},
+				{
+					"name": "Summary: neighbor extensive all",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"command\": \"show neighbor extensive\"\r\n}"
+						},
+						"url": {
+							"raw": "http://{{exabgp_host}}:{{exabgp_port}}/raw",
+							"protocol": "http",
+							"host": [
+								"{{exabgp_host}}"
+							],
+							"port": "{{exabgp_port}}",
+							"path": [
+								"raw"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "10933"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.0.1 Python/3.6.8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 07 Jun 2021 16:52:25 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"command\": \"show neighbor extensive\",\n    \"response\": [\n        \"Neighbor 192.168.0.1\",\n        \"\",\n        \"  Session                         Local\",\n        \"   local                   192.168.0.99                                \",\n        \"   state                    ESTABLISHED                                \",\n        \"   up for                       0:00:29                                \",\n        \"\",\n        \"  Setup                           Local          Remote\",\n        \"   AS                             65001           65001                \",\n        \"   ID                         10.0.0.99       10.0.0.99                \",\n        \"   hold-time                        180             180                \",\n        \"\",\n        \"  Capability                      Local          Remote\",\n        \"   asn4:                        enabled         enabled                \",\n        \"   route-refresh:              disabled         enabled                \",\n        \"   multi-session:              disabled        disabled                \",\n        \"   operational:                disabled        disabled                \",\n        \"   add-path:                   disabled        disabled                \",\n        \"   extended-message:            enabled        disabled                \",\n        \"   graceful-restart:           disabled        disabled                \",\n        \"\",\n        \"  Families                        Local          Remote        Add-Path\",\n        \"   ipv4 unicast:                enabled         enabled        disabled\",\n        \"\",\n        \"  Message Statistic                Sent        Received\",\n        \"   open:                              1               1                \",\n        \"   notification:                      0               0                \",\n        \"   keepalive:                         1               1                \",\n        \"   update:                            1               0                \",\n        \"   refresh:                           0               0                \",\n        \"   total:                             3               2                \",\n        \"\",\n        \"Neighbor 192.168.0.2\",\n        \"\",\n        \"  Session                         Local\",\n        \"   local                   192.168.0.99                                \",\n        \"   state                    ESTABLISHED                                \",\n        \"   up for                       0:00:38                                \",\n        \"\",\n        \"  Setup                           Local          Remote\",\n        \"   AS                             65001           65001                \",\n        \"   ID                         10.0.0.99       10.0.0.99                \",\n        \"   hold-time                        180             180                \",\n        \"\",\n        \"  Capability                      Local          Remote\",\n        \"   asn4:                        enabled         enabled                \",\n        \"   route-refresh:              disabled         enabled                \",\n        \"   multi-session:              disabled        disabled                \",\n        \"   operational:                disabled        disabled                \",\n        \"   add-path:                   disabled        disabled                \",\n        \"   extended-message:            enabled        disabled                \",\n        \"   graceful-restart:           disabled        disabled                \",\n        \"\",\n        \"  Families                        Local          Remote        Add-Path\",\n        \"   ipv4 unicast:                enabled         enabled        disabled\",\n        \"\",\n        \"  Message Statistic                Sent        Received\",\n        \"   open:                              1               1                \",\n        \"   notification:                      0               0                \",\n        \"   keepalive:                         1               1                \",\n        \"   update:                            1               0                \",\n        \"   refresh:                           0               0                \",\n        \"   total:                             3               2                \",\n        \"\",\n        \"Neighbor 192.168.0.3\",\n        \"\",\n        \"  Session                         Local\",\n        \"   local                   192.168.0.99                                \",\n        \"   state                    ESTABLISHED                                \",\n        \"   up for                       0:00:36                                \",\n        \"\",\n        \"  Setup                           Local          Remote\",\n        \"   AS                             65001           65001                \",\n        \"   ID                         10.0.0.99       10.0.0.99                \",\n        \"   hold-time                        180             180                \",\n        \"\",\n        \"  Capability                      Local          Remote\",\n        \"   asn4:                        enabled         enabled                \",\n        \"   route-refresh:              disabled         enabled                \",\n        \"   multi-session:              disabled        disabled                \",\n        \"   operational:                disabled        disabled                \",\n        \"   add-path:                   disabled        disabled                \",\n        \"   extended-message:            enabled        disabled                \",\n        \"   graceful-restart:           disabled        disabled                \",\n        \"\",\n        \"  Families                        Local          Remote        Add-Path\",\n        \"   ipv4 unicast:                enabled         enabled        disabled\",\n        \"\",\n        \"  Message Statistic                Sent        Received\",\n        \"   open:                              1               1                \",\n        \"   notification:                      0               0                \",\n        \"   keepalive:                         1               1                \",\n        \"   update:                            1               0                \",\n        \"   refresh:                           0               0                \",\n        \"   total:                             3               2                \",\n        \"\",\n        \"Neighbor 192.168.0.7\",\n        \"\",\n        \"  Session                         Local\",\n        \"   local                   192.168.0.99                                \",\n        \"   state                    ESTABLISHED                                \",\n        \"   up for                       0:00:33                                \",\n        \"\",\n        \"  Setup                           Local          Remote\",\n        \"   AS                             65001           65001                \",\n        \"   ID                         10.0.0.99       10.0.0.99                \",\n        \"   hold-time                        180             180                \",\n        \"\",\n        \"  Capability                      Local          Remote\",\n        \"   asn4:                        enabled         enabled                \",\n        \"   route-refresh:              disabled         enabled                \",\n        \"   multi-session:              disabled        disabled                \",\n        \"   operational:                disabled        disabled                \",\n        \"   add-path:                   disabled        disabled                \",\n        \"   extended-message:            enabled        disabled                \",\n        \"   graceful-restart:           disabled        disabled                \",\n        \"\",\n        \"  Families                        Local          Remote        Add-Path\",\n        \"   ipv4 unicast:                enabled         enabled        disabled\",\n        \"\",\n        \"  Message Statistic                Sent        Received\",\n        \"   open:                              1               1                \",\n        \"   notification:                      0               0                \",\n        \"   keepalive:                         1               1                \",\n        \"   update:                            1               0                \",\n        \"   refresh:                           0               0                \",\n        \"   total:                             3               2                \",\n        \"\",\n        \"Neighbor 192.168.0.8\",\n        \"\",\n        \"  Session                         Local\",\n        \"   local                   192.168.0.99                                \",\n        \"   state                    ESTABLISHED                                \",\n        \"   up for                       0:00:32                                \",\n        \"\",\n        \"  Setup                           Local          Remote\",\n        \"   AS                             65001           65001                \",\n        \"   ID                         10.0.0.99       10.0.0.99                \",\n        \"   hold-time                        180             180                \",\n        \"\",\n        \"  Capability                      Local          Remote\",\n        \"   asn4:                        enabled         enabled                \",\n        \"   route-refresh:              disabled         enabled                \",\n        \"   multi-session:              disabled        disabled                \",\n        \"   operational:                disabled        disabled                \",\n        \"   add-path:                   disabled        disabled                \",\n        \"   extended-message:            enabled        disabled                \",\n        \"   graceful-restart:           disabled        disabled                \",\n        \"\",\n        \"  Families                        Local          Remote        Add-Path\",\n        \"   ipv4 unicast:                enabled         enabled        disabled\",\n        \"\",\n        \"  Message Statistic                Sent        Received\",\n        \"   open:                              1               1                \",\n        \"   notification:                      0               0                \",\n        \"   keepalive:                         1               1                \",\n        \"   update:                            1               0                \",\n        \"   refresh:                           0               0                \",\n        \"   total:                             3               2                \",\n        \"\",\n        \"Neighbor 192.168.0.9\",\n        \"\",\n        \"  Session                         Local\",\n        \"   local                   192.168.0.99                                \",\n        \"   state                    ESTABLISHED                                \",\n        \"   up for                       0:00:35                                \",\n        \"\",\n        \"  Setup                           Local          Remote\",\n        \"   AS                             65001           65001                \",\n        \"   ID                         10.0.0.99       10.0.0.99                \",\n        \"   hold-time                        180             180                \",\n        \"\",\n        \"  Capability                      Local          Remote\",\n        \"   asn4:                        enabled         enabled                \",\n        \"   route-refresh:              disabled         enabled                \",\n        \"   multi-session:              disabled        disabled                \",\n        \"   operational:                disabled        disabled                \",\n        \"   add-path:                   disabled        disabled                \",\n        \"   extended-message:            enabled        disabled                \",\n        \"   graceful-restart:           disabled        disabled                \",\n        \"\",\n        \"  Families                        Local          Remote        Add-Path\",\n        \"   ipv4 unicast:                enabled         enabled        disabled\",\n        \"\",\n        \"  Message Statistic                Sent        Received\",\n        \"   open:                              1               1                \",\n        \"   notification:                      0               0                \",\n        \"   keepalive:                         1               1                \",\n        \"   update:                            1               0                \",\n        \"   refresh:                           0               0                \",\n        \"   total:                             3               2                \",\n        \"\"\n    ],\n    \"status\": \"done\"\n}"
+				},
+				{
+					"name": "Success: neighbor summary",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"command\": \"show neighbor summary\"\r\n}"
+						},
+						"url": {
+							"raw": "http://{{exabgp_host}}:{{exabgp_port}}/raw",
+							"protocol": "http",
+							"host": [
+								"{{exabgp_host}}"
+							],
+							"port": "{{exabgp_port}}",
+							"path": [
+								"raw"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "562"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.0.1 Python/3.6.8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 07 Jun 2021 16:38:19 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"command\": \"show neighbor summary\",\n    \"response\": [\n        \"Peer            AS        up/down state       |     #sent     #recvd\",\n        \"192.168.0.9     65001     0:00:32 established           1          0\",\n        \"192.168.0.3     65001     0:00:23 established           1          0\",\n        \"192.168.0.7     65001     0:00:32 established           1          0\",\n        \"192.168.0.1     65001     0:00:31 established           1          0\",\n        \"192.168.0.2     65001     0:00:30 established           1          0\",\n        \"192.168.0.8     65001     0:00:29 established           1          0\"\n    ],\n    \"status\": \"done\"\n}"
+				},
+				{
+					"name": "Failure: invalid command",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"command\": \"show bogus\"\r\n}"
+						},
+						"url": {
+							"raw": "http://{{exabgp_host}}:{{exabgp_port}}/raw",
+							"protocol": "http",
+							"host": [
+								"{{exabgp_host}}"
+							],
+							"port": "{{exabgp_port}}",
+							"path": [
+								"raw"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "56"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.0.1 Python/3.6.8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 07 Jun 2021 15:49:45 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"command\": \"show bogus\",\n    \"response\": [],\n    \"status\": \"error\"\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
