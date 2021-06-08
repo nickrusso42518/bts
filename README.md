@@ -31,4 +31,6 @@ There are three API implementations in this repository:
    ordinary Python dictionary.
 
 ## Testing
-See `.travis.yml` for an example of a multi-job CI configuration.
+See `.travis.yml` for an example of a multi-job CI configuration. To reduce
+repetitive code, each general phase has been generically implemented in a
+corresponding bash script.

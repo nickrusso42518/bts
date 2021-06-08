@@ -1,79 +1,26 @@
 ---
 jobs:
   include:
-
     - name: "Flask HTTP API"
       language: "python"
-      python:
-        - "3.7.3"
-
-      install:
-        - "pip install -r flask/requirements.txt"
-        - "sudo ./make_pipes.sh"
-
-      before_script:
-        - "pylint --verbose flask/server.py flask/test_api.py"
-        - "black --line-length 82 --check flask/server.py flask/test_api.py"
-        - 'sed --in-place "s:BUILD_DIR:$TRAVIS_BUILD_DIR:" flask/ci.txt'
-        - "head --lines=5 flask/ci.txt"
-        - "exabgp flask/ci.txt --validate"
-        - "exabgp flask/conf.txt --validate"
-
-      script:
-        - >-
-          env exabgp.tcp.bind=127.0.0.1
-          exabgp.tcp.port=5001
-          exabgp flask/ci.txt &
-        - "pytest --verbose flask/test_api.py"
-
+      python: ["3.7.3"]
+      install: ["./install.sh flask"]
+      before_script: ["./before_script.sh flask"]
+      script: ["./script.sh flask"]
 
     - name: "gRPC API"
       language: "python"
-      python:
-        - "3.7.3"
-
+      python: ["3.7.3"]
       install:
-        - "pip install -r grpc/requirements.txt"
-        - "sudo ./make_pipes.sh"
+        - "./install.sh grpc"
         - "./grpc/compile.sh grpc"
-
-      before_script:
-        - "pylint --verbose grpc/server.py grpc/test_api.py"
-        - "black --line-length 82 --check grpc/server.py grpc/test_api.py"
-        - 'sed --in-place "s:BUILD_DIR:$TRAVIS_BUILD_DIR:" grpc/ci.txt'
-        - "head --lines=5 grpc/ci.txt"
-        - "exabgp grpc/ci.txt --validate"
-        - "exabgp grpc/conf.txt --validate"
-
-      script:
-        - >-
-          env exabgp.tcp.bind=127.0.0.1
-          exabgp.tcp.port=5001
-          exabgp grpc/ci.txt &
-        - "pytest --verbose grpc/test_api.py"
-
+      before_script: ["./before_script.sh grpc"]
+      script: ["./script.sh grpc"]
 
     - name: "FastAPI REST API"
       language: "python"
-      python:
-        - "3.7.3"
-
-      install:
-        - "pip install -r fastapi/requirements.txt"
-        - "sudo ./make_pipes.sh"
-
-      before_script:
-        - "pylint --verbose fastapi/server.py fastapi/test_api.py"
-        - "black --line-length 82 --check fastapi/server.py fastapi/test_api.py"
-        - 'sed --in-place "s:BUILD_DIR:$TRAVIS_BUILD_DIR:" fastapi/ci.txt'
-        - "head --lines=5 fastapi/ci.txt"
-        - "exabgp flask/ci.txt --validate"
-        - "exabgp flask/conf.txt --validate"
-
-      script:
-        - >-
-          env exabgp.tcp.bind=127.0.0.1
-          exabgp.tcp.port=5001
-          exabgp fastapi/ci.txt &
-        - "pytest --verbose fastapi/test_api.py"
+      python: ["3.7.3"]
+      install: ["./install.sh fastapi"]
+      before_script: ["./before_script.sh fastapi"]
+      script: ["./script.sh fastapi"]
 ...
