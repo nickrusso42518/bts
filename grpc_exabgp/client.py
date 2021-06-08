@@ -18,7 +18,7 @@ def main():
     with grpc.insecure_channel('localhost:50051') as conn:
         stub = bts_pb2_grpc.BTSStub(conn)
         resp = stub.VersionRPC(bts_pb2.VersionArgs())
-        print(f"flask: {resp.flask_version} / exabgp: {resp.exabgp_version}")
+        print(f"grpc: {resp.grpc_version} / exabgp: {resp.exabgp_version}")
 
         resp = stub.RoutesRPC(bts_pb2.RoutesArgs())
         print(f"count: {resp.count} / routes: {resp.routes}")
@@ -26,16 +26,16 @@ def main():
         data = {
             "prefix": "192.0.2.0/24",
             "nexthop": "198.51.100.1",
-            # "neighbor": "203.0.113.1",
-            # "pathid": 1,
+            "neighbor": "203.0.113.1",
+            "pathid": 1,
         }
         resp = stub.AnnounceRPC(bts_pb2.AnnounceArgs(**data))
         print(get_scr(resp))
 
         data = {
             "prefix": "192.0.2.0/24",
-            # "neighbor": "203.0.113.1",
-            # "pathid": 1,
+            "neighbor": "203.0.113.1",
+            "pathid": 1,
         }
         resp = stub.WithdrawRPC(bts_pb2.WithdrawArgs(**data))
         print(get_scr(resp))

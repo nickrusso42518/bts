@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\tbts.proto\"\r\n\x0bVersionArgs\"\x0c\n\nRoutesArgs\"=\n\x0cVersionReply\x12\x16\n\x0e\x65xabgp_version\x18\x01 \x01(\t\x12\x15\n\rflask_version\x18\x02 \x01(\t\"i\n\tRouteItem\x12\x0e\n\x06prefix\x18\x01 \x01(\t\x12\x10\n\x08neighbor\x18\x02 \x01(\t\x12\x0f\n\x07nexthop\x18\x03 \x01(\t\x12\x0e\n\x06pathid\x18\x04 \x01(\t\x12\x0b\n\x03\x61\x66i\x18\x05 \x01(\t\x12\x0c\n\x04safi\x18\x06 \x01(\t\"8\n\x0bRoutesReply\x12\r\n\x05\x63ount\x18\x01 \x01(\r\x12\x1a\n\x06routes\x18\x02 \x03(\x0b\x32\n.RouteItem\"t\n\x0c\x41nnounceArgs\x12\x10\n\x06prefix\x18\x01 \x01(\tH\x00\x12\x11\n\x07nexthop\x18\x02 \x01(\tH\x01\x12\x10\n\x08neighbor\x18\x03 \x01(\t\x12\x0e\n\x06pathid\x18\x04 \x01(\rB\r\n\x0bprefix_reqtB\x0e\n\x0cnexthop_reqt\"B\n\rAnnounceReply\x12\x0e\n\x06status\x18\x01 \x01(\t\x12\x0f\n\x07\x63ommand\x18\x02 \x01(\t\x12\x10\n\x08response\x18\x03 \x03(\t\"R\n\x0cWithdrawArgs\x12\x10\n\x06prefix\x18\x01 \x01(\tH\x00\x12\x10\n\x08neighbor\x18\x02 \x01(\t\x12\x0f\n\x07path_id\x18\x03 \x01(\rB\r\n\x0bprefix_reqt\"B\n\rWithdrawReply\x12\x0e\n\x06status\x18\x01 \x01(\t\x12\x0f\n\x07\x63ommand\x18\x02 \x01(\t\x12\x10\n\x08response\x18\x03 \x03(\t\",\n\x07RawArgs\x12\x11\n\x07\x63ommand\x18\x01 \x01(\tH\x00\x42\x0e\n\x0c\x63ommand_reqt\"=\n\x08RawReply\x12\x0e\n\x06status\x18\x01 \x01(\t\x12\x0f\n\x07\x63ommand\x18\x02 \x01(\t\x12\x10\n\x08response\x18\x03 \x03(\t2\xdd\x01\n\x03\x42TS\x12+\n\nVersionRPC\x12\x0c.VersionArgs\x1a\r.VersionReply\"\x00\x12(\n\tRoutesRPC\x12\x0b.RoutesArgs\x1a\x0c.RoutesReply\"\x00\x12.\n\x0b\x41nnounceRPC\x12\r.AnnounceArgs\x1a\x0e.AnnounceReply\"\x00\x12.\n\x0bWithdrawRPC\x12\r.WithdrawArgs\x1a\x0e.WithdrawReply\"\x00\x12\x1f\n\x06RawRPC\x12\x08.RawArgs\x1a\t.RawReply\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\tbts.proto\"\r\n\x0bVersionArgs\"\x0c\n\nRoutesArgs\"<\n\x0cVersionReply\x12\x16\n\x0e\x65xabgp_version\x18\x01 \x01(\t\x12\x14\n\x0cgrpc_version\x18\x02 \x01(\t\"i\n\tRouteItem\x12\x0e\n\x06prefix\x18\x01 \x01(\t\x12\x10\n\x08neighbor\x18\x02 \x01(\t\x12\x0f\n\x07nexthop\x18\x03 \x01(\t\x12\x0e\n\x06pathid\x18\x04 \x01(\t\x12\x0b\n\x03\x61\x66i\x18\x05 \x01(\t\x12\x0c\n\x04safi\x18\x06 \x01(\t\"8\n\x0bRoutesReply\x12\r\n\x05\x63ount\x18\x01 \x01(\r\x12\x1a\n\x06routes\x18\x02 \x03(\x0b\x32\n.RouteItem\"t\n\x0c\x41nnounceArgs\x12\x10\n\x06prefix\x18\x01 \x01(\tH\x00\x12\x11\n\x07nexthop\x18\x02 \x01(\tH\x01\x12\x10\n\x08neighbor\x18\x03 \x01(\t\x12\x0e\n\x06pathid\x18\x04 \x01(\rB\r\n\x0bprefix_reqtB\x0e\n\x0cnexthop_reqt\"B\n\rAnnounceReply\x12\x0e\n\x06status\x18\x01 \x01(\t\x12\x0f\n\x07\x63ommand\x18\x02 \x01(\t\x12\x10\n\x08response\x18\x03 \x03(\t\"Q\n\x0cWithdrawArgs\x12\x10\n\x06prefix\x18\x01 \x01(\tH\x00\x12\x10\n\x08neighbor\x18\x02 \x01(\t\x12\x0e\n\x06pathid\x18\x03 \x01(\rB\r\n\x0bprefix_reqt\"B\n\rWithdrawReply\x12\x0e\n\x06status\x18\x01 \x01(\t\x12\x0f\n\x07\x63ommand\x18\x02 \x01(\t\x12\x10\n\x08response\x18\x03 \x03(\t\",\n\x07RawArgs\x12\x11\n\x07\x63ommand\x18\x01 \x01(\tH\x00\x42\x0e\n\x0c\x63ommand_reqt\"=\n\x08RawReply\x12\x0e\n\x06status\x18\x01 \x01(\t\x12\x0f\n\x07\x63ommand\x18\x02 \x01(\t\x12\x10\n\x08response\x18\x03 \x03(\t2\xdd\x01\n\x03\x42TS\x12+\n\nVersionRPC\x12\x0c.VersionArgs\x1a\r.VersionReply\"\x00\x12(\n\tRoutesRPC\x12\x0b.RoutesArgs\x1a\x0c.RoutesReply\"\x00\x12.\n\x0b\x41nnounceRPC\x12\r.AnnounceArgs\x1a\x0e.AnnounceReply\"\x00\x12.\n\x0bWithdrawRPC\x12\r.WithdrawArgs\x1a\x0e.WithdrawReply\"\x00\x12\x1f\n\x06RawRPC\x12\x08.RawArgs\x1a\t.RawReply\"\x00\x62\x06proto3'
 )
 
 
@@ -91,7 +91,7 @@ _VERSIONREPLY = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='flask_version', full_name='VersionReply.flask_version', index=1,
+      name='grpc_version', full_name='VersionReply.grpc_version', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -110,7 +110,7 @@ _VERSIONREPLY = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=42,
-  serialized_end=103,
+  serialized_end=102,
 )
 
 
@@ -176,8 +176,8 @@ _ROUTEITEM = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=105,
-  serialized_end=210,
+  serialized_start=104,
+  serialized_end=209,
 )
 
 
@@ -215,8 +215,8 @@ _ROUTESREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=212,
-  serialized_end=268,
+  serialized_start=211,
+  serialized_end=267,
 )
 
 
@@ -278,8 +278,8 @@ _ANNOUNCEARGS = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=270,
-  serialized_end=386,
+  serialized_start=269,
+  serialized_end=385,
 )
 
 
@@ -324,8 +324,8 @@ _ANNOUNCEREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=388,
-  serialized_end=454,
+  serialized_start=387,
+  serialized_end=453,
 )
 
 
@@ -352,7 +352,7 @@ _WITHDRAWARGS = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='path_id', full_name='WithdrawArgs.path_id', index=2,
+      name='pathid', full_name='WithdrawArgs.pathid', index=2,
       number=3, type=13, cpp_type=3, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -375,8 +375,8 @@ _WITHDRAWARGS = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=456,
-  serialized_end=538,
+  serialized_start=455,
+  serialized_end=536,
 )
 
 
@@ -421,8 +421,8 @@ _WITHDRAWREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=540,
-  serialized_end=606,
+  serialized_start=538,
+  serialized_end=604,
 )
 
 
@@ -458,8 +458,8 @@ _RAWARGS = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=608,
-  serialized_end=652,
+  serialized_start=606,
+  serialized_end=650,
 )
 
 
@@ -504,8 +504,8 @@ _RAWREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=654,
-  serialized_end=715,
+  serialized_start=652,
+  serialized_end=713,
 )
 
 _ROUTESREPLY.fields_by_name['routes'].message_type = _ROUTEITEM
@@ -620,8 +620,8 @@ _BTS = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=718,
-  serialized_end=939,
+  serialized_start=716,
+  serialized_end=937,
   methods=[
   _descriptor.MethodDescriptor(
     name='VersionRPC',

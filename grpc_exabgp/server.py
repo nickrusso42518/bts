@@ -76,9 +76,11 @@ class BTS(bts_pb2_grpc.BTSServicer):
         peer = context.peer()
         self.logger.info("VersionRPC from %s", peer)
 
-        data = {"exabgp_version": "ev", "flask_version": "fv"}
-
+        resp = BTS._send_command("version")
+        exabgp_ver = resp["response"][0].split(" ")[-1].strip()
+        data = {"grpc_version": grpc.__version__, "exabgp_version": exabgp_ver}
         self.logger.info("VersionReply to %s with %s", peer, data)
+
         return bts_pb2.VersionReply(**data)
 
     def RoutesRPC(self, request, context):

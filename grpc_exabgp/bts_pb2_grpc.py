@@ -7,7 +7,7 @@ import bts_pb2 as bts__pb2
 
 class BTSStub(object):
     """Define the BTS RPC requests:
-    1. VersionRPC returns the exabgp and flask versions (health check).
+    1. VersionRPC returns the exabgp and gRPC versions (health check).
     2. RoutesRPC returns a list of announced routes (parsed) and an count value.
     3. AnnounceRPC advertises a new route and returns the exabgp response.
     4. WithdrawRPC un-advertises an old route and returns the exabgp response.
@@ -49,7 +49,7 @@ class BTSStub(object):
 
 class BTSServicer(object):
     """Define the BTS RPC requests:
-    1. VersionRPC returns the exabgp and flask versions (health check).
+    1. VersionRPC returns the exabgp and gRPC versions (health check).
     2. RoutesRPC returns a list of announced routes (parsed) and an count value.
     3. AnnounceRPC advertises a new route and returns the exabgp response.
     4. WithdrawRPC un-advertises an old route and returns the exabgp response.
@@ -123,7 +123,7 @@ def add_BTSServicer_to_server(servicer, server):
  # This class is part of an EXPERIMENTAL API.
 class BTS(object):
     """Define the BTS RPC requests:
-    1. VersionRPC returns the exabgp and flask versions (health check).
+    1. VersionRPC returns the exabgp and gRPC versions (health check).
     2. RoutesRPC returns a list of announced routes (parsed) and an count value.
     3. AnnounceRPC advertises a new route and returns the exabgp response.
     4. WithdrawRPC un-advertises an old route and returns the exabgp response.

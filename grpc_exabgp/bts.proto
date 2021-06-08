@@ -6,7 +6,7 @@
 syntax = "proto3";
 
 // Define the BTS RPC requests:
-// 1. VersionRPC returns the exabgp and flask versions (health check).
+// 1. VersionRPC returns the exabgp and gRPC versions (health check).
 // 2. RoutesRPC returns a list of announced routes (parsed) and an count value.
 // 3. AnnounceRPC advertises a new route and returns the exabgp response.
 // 4. WithdrawRPC un-advertises an old route and returns the exabgp response.
@@ -25,10 +25,10 @@ message VersionArgs {};
 // Empty message (placeholder) for the RoutesRPC.
 message RoutesArgs {};
 
-// Returned from the VersionRPC; contains exabgp and flask versions.
+// Returned from the VersionRPC; contains exabgp and gRPC versions.
 message VersionReply {
     string exabgp_version = 1;
-    string flask_version = 2;
+    string grpc_version = 2;
 }
 
 // Represents an individual route object after parsing, containing the key
@@ -76,7 +76,7 @@ message WithdrawArgs {
         string prefix = 1;
     }
     string neighbor = 2;
-    uint32 path_id = 3;
+    uint32 pathid = 3;
 }
 
 // Returned from the AnnounceRPC; contains the exabgp command issued, the
