@@ -1,5 +1,5 @@
 process http-api {
-    run /usr/bin/env python BUILD_DIR/flask/app.py;
+    run /usr/bin/env python BUILD_DIR/flask/server.py;
     encoder json;
 }
 

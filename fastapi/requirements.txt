@@ -1,0 +1,7 @@
+exabgp
+fastapi
+uvicorn[standard]
+httpx
+black
+pylint
+pytest

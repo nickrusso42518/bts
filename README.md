@@ -10,7 +10,9 @@ the architecture described [here.](http://njrusmc.net/pub/bts_leaf_spine.pdf)
 > Email:    njrusmc@gmail.com\
 > Twitter:  @nickrusso42518
 
-There are two API implementations in this repository:
+## Implementations
+
+There are three API implementations in this repository:
 
 1. __Flask/HTTP__: This uses Python `flask` as a front-end to build a simple
    HTTP API (not RESTful) for announcing and withdrawing routes. 
@@ -21,3 +23,12 @@ There are two API implementations in this repository:
    RPCs supported by the API. It also includes a compilation script
    for Python source code. Last, it includes dial-in streaming telemetry
    to count the number of currently-advertised routes.
+
+3. __FastAPI/REST__: This uses Python `fastapi` as a front-end to build a REST
+   API using HTTP transport for announcing and withdrawing routes. 
+   This includes a Postman collection and corresponding environment to
+   simplify adoption/testing. For simplicity, the example database is an
+   ordinary Python dictionary.
+
+## Testing
+See `.travis.yml` for an example of a multi-job CI configuration.

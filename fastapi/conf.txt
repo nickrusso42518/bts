@@ -1,5 +1,5 @@
-process http-api {
-    run /usr/bin/env python /root/bts/flask/server.py;
+process rest-api {
+    run /usr/bin/env python /root/bts/fastapi/server.py;
     encoder json;
 }
 
@@ -19,7 +19,7 @@ template {
             ipv4 unicast;
         }
         api {
-            processes [ http-api ];
+            processes [ rest-api ];
         }
     }
 }
