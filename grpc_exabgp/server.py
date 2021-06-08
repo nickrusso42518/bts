@@ -104,7 +104,6 @@ class BTS(bts_pb2_grpc.BTSServicer):
         # the response dictionary super-structure
         route_regex = re.compile(pattern)
 
-        """
         raw_data = BTS._send_command("show adj-rib out")
         data = {"count": len(raw_data["response"]), "routes": []}
 
@@ -114,8 +113,8 @@ class BTS(bts_pb2_grpc.BTSServicer):
         for route in raw_data["response"]:
             match = route_regex.search(route)
             data["routes"].append(match.groupdict())
-        """
 
+        """
         data = {
             "count": 1,
             "routes": [
@@ -129,6 +128,7 @@ class BTS(bts_pb2_grpc.BTSServicer):
                 }
             ],
         }
+        """
 
         self.logger.info("RoutesRPC to %s with %s", peer, data)
         return bts_pb2.RoutesReply(**data)
@@ -142,6 +142,7 @@ class BTS(bts_pb2_grpc.BTSServicer):
         self.logger.info("AnnounceRPC from %s", peer)
 
         # Collect the individual fields from the body (prefix/nexthop required)
+        # TODO use hasattr() and getattr() because unspecified items are absent
         prefix = request.prefix
         nexthop = request.nexthop
         neighbor = request.neighbor
@@ -153,8 +154,8 @@ class BTS(bts_pb2_grpc.BTSServicer):
         cmd_str = f"{nbr_str}announce route {prefix} {path_str}next-hop {nexthop}"
 
         # Issue the command and return the response
-        # data = BTS._send_command(cmd_str)
-        data = {"status": "s", "command": "c", "response": ["r"]}
+        data = BTS._send_command(cmd_str)
+        # data = {"status": "s", "command": "c", "response": ["r"]}
 
         self.logger.info("AnnounceReply to %s with %s", peer, data)
         return bts_pb2.AnnounceReply(**data)
@@ -168,6 +169,7 @@ class BTS(bts_pb2_grpc.BTSServicer):
         self.logger.info("WithdrawRPC from %s", peer)
 
         # Collect the individual fields from the body (prefix required)
+        # TODO use hasattr() and getattr() because unspecified items are absent
         prefix = request.prefix
         neighbor = request.neighbor
         pathid = request.pathid
@@ -178,8 +180,8 @@ class BTS(bts_pb2_grpc.BTSServicer):
         cmd_str = f"{nbr_str}withdraw route {prefix} {path_str}"
 
         # Issue the command and return the response
-        # data = BTS._send_command(cmd_str)
-        data = {"status": "s", "command": "c", "response": ["r"]}
+        data = BTS._send_command(cmd_str)
+        # data = {"status": "s", "command": "c", "response": ["r"]}
 
         self.logger.info("WithdrawRPC to %s with %s", peer, data)
         return bts_pb2.WithdrawReply(**data)
@@ -193,9 +195,8 @@ class BTS(bts_pb2_grpc.BTSServicer):
         self.logger.info("RawRPC from %s", peer)
 
         # Send the raw command and return the response
-        # data = BTS._send_command(request.command)
-
-        data = {"status": "s", "command": request.command, "response": ["r"]}
+        data = BTS._send_command(request.command)
+        # data = {"status": "s", "command": request.command, "response": ["r"]}
 
         self.logger.info("RawRPC to %s with %s", peer, data)
         return bts_pb2.RawReply(**data)
