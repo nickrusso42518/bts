@@ -23,11 +23,11 @@ def _announce_route(body, sha256):
 
     data = resp.json()
     assert len(data) == 1
-    items = data.get(sha256).items()
-    assert items
-    for k, v in items:
-        if not v is None:
-            assert body[k] == v
+
+    entry = data.get(sha256)
+    assert entry
+    for key, value in body.items():
+        assert entry[key] == value
 
 
 def _withdraw_route(sha256):
@@ -71,6 +71,7 @@ def test_version():
     data = resp.json()
     assert data.get("fastapi_version")
     assert data.get("exabgp_version")
+
 
 def test_announce_pfx_nh():
     """

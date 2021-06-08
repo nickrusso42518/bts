@@ -24,6 +24,7 @@ class Route(BaseModel):
     """
     Identify the optional and mandatory components of a route.
     """
+
     prefix: str
     nexthop: str
     neighbor: Optional[str] = None
