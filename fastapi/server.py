@@ -106,7 +106,7 @@ def get_specific_route(route_hash: str):
     raise HTTPException(status_code=404, detail=f"{route_hash} not found")
 
 
-@app.post("/routes")
+@app.post("/routes", status_code=201)
 def announce_route(route: Route):
     """
     Announces (advertises) a new route into the BGP network. Must include

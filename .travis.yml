@@ -2,18 +2,18 @@
 jobs:
   include:
 
-    # Test Flask HTTP API
-    - language: "python"
+    - name: "Flask HTTP API"
+      language: "python"
       python:
-        - "3.7"
+        - "3.7.3"
 
       install:
         - "pip install -r flask/requirements.txt"
         - "sudo ./make_pipes.sh"
 
       before_script:
-        - "pylint flask/*.py"
-        - "black --line-length 82 --check flask/*.py"
+        - "pylint --verbose flask/server.py flask/test_api.py"
+        - "black --line-length 82 --check flask/server.py flask/test_api.py"
         - 'sed --in-place "s:BUILD_DIR:$TRAVIS_BUILD_DIR:" flask/ci.txt'
         - "head --lines=5 flask/ci.txt"
         - "exabgp flask/ci.txt --validate"
@@ -26,10 +26,11 @@ jobs:
           exabgp flask/ci.txt &
         - "pytest --verbose flask/test_api.py"
 
-    # Test gRPC API
-    - language: "python"
+
+    - name: "gRPC API"
+      language: "python"
       python:
-        - "3.7"
+        - "3.7.3"
 
       install:
         - "pip install -r grpc/requirements.txt"
@@ -37,7 +38,7 @@ jobs:
         - "./grpc/compile.sh grpc"
 
       before_script:
-        - "pylint grpc/server.py grpc/test_api.py"
+        - "pylint --verbose grpc/server.py grpc/test_api.py"
         - "black --line-length 82 --check grpc/server.py grpc/test_api.py"
         - 'sed --in-place "s:BUILD_DIR:$TRAVIS_BUILD_DIR:" grpc/ci.txt'
         - "head --lines=5 grpc/ci.txt"
@@ -51,18 +52,19 @@ jobs:
           exabgp grpc/ci.txt &
         - "pytest --verbose grpc/test_api.py"
 
-    # Test FastAPI REST API
-    - language: "python"
+
+    - name: "FastAPI REST API"
+      language: "python"
       python:
-        - "3.7"
+        - "3.7.3"
 
       install:
         - "pip install -r fastapi/requirements.txt"
         - "sudo ./make_pipes.sh"
 
       before_script:
-        - "pylint fastapi/*.py"
-        - "black --line-length 82 --check fastapi/*.py"
+        - "pylint --verbose fastapi/server.py fastapi/test_api.py"
+        - "black --line-length 82 --check fastapi/server.py fastapi/test_api.py"
         - 'sed --in-place "s:BUILD_DIR:$TRAVIS_BUILD_DIR:" fastapi/ci.txt'
         - "head --lines=5 fastapi/ci.txt"
         - "exabgp flask/ci.txt --validate"
@@ -72,7 +74,6 @@ jobs:
         - >-
           env exabgp.tcp.bind=127.0.0.1
           exabgp.tcp.port=5001
-          exabgp flask/ci.txt &
-        - "true"
-        # - "pytest --verbose fastapi/test_api.py"
+          exabgp fastapi/ci.txt &
+        - "pytest --verbose fastapi/test_api.py"
 ...

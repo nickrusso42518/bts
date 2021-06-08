@@ -2,7 +2,7 @@
 
 """
 Author: Nick Russo (njrusmc@gmail.com)
-Purpose: Test cases for the app.py endpoints.
+Purpose: Test cases for the server.py endpoints.
 """
 
 import httpx
