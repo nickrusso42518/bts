@@ -56,6 +56,28 @@ def _check_routes(stub, count):
         assert route.safi == "unicast"
 
 
+def _check_routestream(stub, count, frequency, duration):
+    """
+    Helper function to ensure a specified number of routes are
+    streamed using telemetry back from the app. The frequency and
+    duration parameters are both integers measured in milliseconds.
+    """
+
+    data = stub.RouteStreamRPC(bts_pb2.RouteStreamArgs(frequency=frequency))
+
+    # Start a time measurement and collect telemetry updates as they come
+    elapsed = 0
+    for message in data:
+        assert message.count == count
+
+        # We've met or exceeded the desired duration; quit the loop
+        if elapsed >= duration:
+            break
+
+        # We haven't met or exceed the desired duration; continue
+        elapsed += frequency
+
+
 def test_version(stub):
     """
     Test the "VersionRPC" method.
@@ -125,6 +147,14 @@ def test_routes_full(stub):
     _check_routes(stub, 8)
 
 
+def test_routestream_full(stub):
+    """
+    Test the "RouteStreamRPC" method every 500 ms for a 2 second duration
+    (generates 4 responses) and ensure there are the correct number of routes.
+    """
+    _check_routestream(stub, 8, 500, 2000)
+
+
 def test_raw(stub):
     """
     Test the "RawRPC" method by examining the adj-RIB out and
@@ -191,3 +221,11 @@ def test_routes_empty(stub):
     """
 
     _check_routes(stub, 0)
+
+
+def test_routestream_empty(stub):
+    """
+    Test the "RouteStreamRPC" method every 500 ms for a 2 second duration
+    (generates 4 responses) and ensure there are exactly 0 routes.
+    """
+    _check_routestream(stub, 0, 500, 2000)

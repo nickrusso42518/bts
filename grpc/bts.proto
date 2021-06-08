@@ -11,12 +11,14 @@ syntax = "proto3";
 // 3. AnnounceRPC advertises a new route and returns the exabgp response.
 // 4. WithdrawRPC un-advertises an old route and returns the exabgp response.
 // 5. RawRPC sends an unmodified raw command and returns the exabgp response.
+// 6. RouteStreamRPC returns the number of exabgp routes periodically.
 service BTS {
     rpc VersionRPC(VersionArgs) returns(VersionReply) {};
     rpc RoutesRPC(RoutesArgs) returns(RoutesReply) {};
     rpc AnnounceRPC(AnnounceArgs) returns(AnnounceReply) {};
     rpc WithdrawRPC(WithdrawArgs) returns(WithdrawReply) {};
     rpc RawRPC(RawArgs) returns(RawReply) {};
+    rpc RouteStreamRPC(RouteStreamArgs) returns(stream RouteStreamReply) {};
 }
 
 // Empty message (placeholder) for the VersionRPC.
@@ -102,4 +104,18 @@ message RawReply {
     string status = 1;
     string command = 2;
     repeated string response = 3;
+}
+
+// Arguments for the RouteStreamRPC. The frequency indicates how often
+// the server should send a route count telemetry update in milliseconds.
+message RouteStreamArgs {
+    oneof frequency_reqt {
+        uint32 frequency = 1;
+    }
+}
+
+// Returned from the RouteStreamRPC; contains the number of routes
+// currently in the exabgp adj-rib out across all neighbors.
+message RouteStreamReply {
+    uint32 count = 1;
 }

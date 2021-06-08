@@ -141,8 +141,6 @@ class BTS(bts_pb2_grpc.BTSServicer):
 
         # Issue the command and return the response
         data = BTS._send_command(cmd_str)
-        # data = {"status": "s", "command": "c", "response": ["r"]}
-
         self.logger.info("AnnounceReply to %s with %s", peer, data)
         return bts_pb2.AnnounceReply(**data)
 
@@ -166,14 +164,12 @@ class BTS(bts_pb2_grpc.BTSServicer):
 
         # Issue the command and return the response
         data = BTS._send_command(cmd_str)
-        # data = {"status": "s", "command": "c", "response": ["r"]}
-
         self.logger.info("WithdrawRPC to %s with %s", peer, data)
         return bts_pb2.WithdrawReply(**data)
 
     def RawRPC(self, request, context):
         """
-        pc RawRPC(RawArgs) returns(RawReply) {};
+        rpc RawRPC(RawArgs) returns(RawReply) {};
         """
 
         peer = context.peer()
@@ -181,10 +177,25 @@ class BTS(bts_pb2_grpc.BTSServicer):
 
         # Send the raw command and return the response
         data = BTS._send_command(request.command)
-        # data = {"status": "s", "command": request.command, "response": ["r"]}
-
         self.logger.info("RawRPC to %s with %s", peer, data)
         return bts_pb2.RawReply(**data)
+
+    def RouteStreamRPC(self, request, context):
+        """
+        rpc RouteStreamRPC(RouteStreamArgs) returns(stream RouteStreamReply) {};
+        """
+
+        peer = context.peer()
+        self.logger.info("RouteStreamRPC from %s", peer)
+
+        # Get the adj-rib out routes, count them, and yield the response
+        while True:
+            raw_data = BTS._send_command("show adj-rib out")
+            count = len(raw_data["response"])
+            data = bts_pb2.RouteStreamReply(count=count)
+            yield data
+            self.logger.info("RouteStreamRPC to %s with %s", peer, count)
+            time.sleep(request.frequency / 1000)
 
 
 def main():

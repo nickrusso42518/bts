@@ -19,4 +19,5 @@ There are two API implementations in this repository:
 
 2. __gRPC__: This uses a custom protobuf services file to define various
    RPCs supported by the API. It also includes a compilation script
-   for Python source code.
+   for Python source code. Last, it includes dial-in streaming telemetry
+   to count the number of currently-advertised routes.
