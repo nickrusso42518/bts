@@ -1,0 +1,105 @@
+// BGP Traffic-engineering Server gRPC Services Defintion
+// Author: Nick Russo (njrusmc@gmail.com)
+// For more context about this API, read the free technical whitepaper:
+// http://njrusmc.net/pub/bts_leaf_spine.pdf
+
+syntax = "proto3";
+
+// Define the BTS RPC requests:
+// 1. VersionRPC returns the exabgp and flask versions (health check).
+// 2. RoutesRPC returns a list of announced routes (parsed) and an count value.
+// 3. AnnounceRPC advertises a new route and returns the exabgp response.
+// 4. WithdrawRPC un-advertises an old route and returns the exabgp response.
+// 5. RawRPC sends an unmodified raw command and returns the exabgp response.
+service BTS {
+    rpc VersionRPC(VersionArgs) returns(VersionReply) {};
+    rpc RoutesRPC(RoutesArgs) returns(RoutesReply) {};
+    rpc AnnounceRPC(AnnounceArgs) returns(AnnounceReply) {};
+    rpc WithdrawRPC(WithdrawArgs) returns(WithdrawReply) {};
+    rpc RawRPC(RawArgs) returns(RawReply) {};
+}
+
+// Empty message (placeholder) for the VersionRPC.
+message VersionArgs {};
+
+// Empty message (placeholder) for the RoutesRPC.
+message RoutesArgs {};
+
+// Returned from the VersionRPC; contains exabgp and flask versions.
+message VersionReply {
+    string exabgp_version = 1;
+    string flask_version = 2;
+}
+
+// Represents an individual route object after parsing, containing the key
+// pieces of information returned by the exabgp "show adj-rib out" command.
+message RouteItem {
+    string prefix = 1;
+    string neighbor = 2;
+    string nexthop = 3;
+    string pathid = 4;
+    string afi = 5;
+    string safi = 6;
+}
+
+// Returned from RoutesRPC and contains a list of RouteItem messages from above.
+message RoutesReply {
+    uint32 count = 1;
+    repeated RouteItem routes = 2;
+}
+
+// Arguments for the AnnounceRPC. The prefix and nexthop are required but
+// the neighbor and additional-path ID are optional.
+message AnnounceArgs {
+    oneof prefix_reqt {
+        string prefix = 1;
+    }
+    oneof nexthop_reqt {
+        string nexthop = 2;
+    }
+    string neighbor = 3;
+    uint32 pathid = 4;
+}
+
+// Returned from the AnnounceRPC; contains the exabgp command issued, the
+// exabgp status code, and the exabgp response output as a list of strings.
+message AnnounceReply {
+    string status = 1;
+    string command = 2;
+    repeated string response = 3;
+}
+
+// Arguments for the WithdrawRPC. Only the prefix is required but the
+// neighbor and additional-path ID are optional. Next-hop is never needed.
+message WithdrawArgs {
+    oneof prefix_reqt {
+        string prefix = 1;
+    }
+    string neighbor = 2;
+    uint32 path_id = 3;
+}
+
+// Returned from the AnnounceRPC; contains the exabgp command issued, the
+// exabgp status code, and the exabgp response output as a list of strings.
+// Note that this is identical to AnnounceReply but may change in the future.
+message WithdrawReply {
+    string status = 1;
+    string command = 2;
+    repeated string response = 3;
+}
+
+// Arguments for the RawRPC. Only the exabgp command is required.
+message RawArgs {
+    oneof command_reqt {
+        string command = 1;
+    }
+}
+
+// Returned from the RawRPC; contains the exabgp command issued, the
+// exabgp status code, and the exabgp response output as a list of strings.
+// Note that this is identical to AnnounceReply but may change in the future.
+message RawReply {
+    string status = 1;
+    string command = 2;
+    repeated string response = 3;
+}
