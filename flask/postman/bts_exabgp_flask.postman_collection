@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "e32da33e-1df1-4098-8c32-c8201fad7110",
-		"name": "BTS exabgp",
+		"name": "BTS exabgp Flask",
 		"description": "Basic HTTP front-end for exabgp, a Python-based BGP implementation: https://github.com/Exa-Networks/exabgp\r\n\r\nThis relates to the BGP Traffic Server (BTS) project: http://njrusmc.net/pub/bts_leaf_spine.pdf\r\n\r\nSource code: https://github.com/nickrusso42518/bts",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
