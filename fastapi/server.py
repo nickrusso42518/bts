@@ -129,7 +129,7 @@ def announce_route(route: Route):
 
     # If hash already exists, return a Conflict error
     if route_hash in route_db:
-        raise HTTPException(status_code=401, detail=f"Duplicate {route_hash}")
+        raise HTTPException(status_code=409, detail=f"Duplicate {route_hash}")
 
     # Hash is new; assemble the path ID, neighbor, and command strings
     path_str = f"path-information 0.0.0.{pathid} " if pathid else ""
